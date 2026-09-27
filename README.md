@@ -9,12 +9,16 @@
 | `scripts/materials_on_slope.py` | Движение тел с разными материалами по наклонной плоскости | `python scripts/materials_on_slope.py` |
 | `scripts/mouse_control_with_cloth.py` | Интерактивное управление тканью мышью | `python scripts/mouse_control_with_cloth.py` |
 | `scripts/two_robot_cloth_handover.py` | Передача и растяжение ткани двумя роботами | `python scripts/two_robot_cloth_handover.py` |
+| `scripts/pick_water_cup_place_and_fall.py` | Робот Franka поднимает и наклоняет чашку с SPH-жидкостью, затем отпускает её | `python scripts/pick_water_cup_place_and_fall.py` |
 
 Записи результатов:
 
 - `videos/materials_on_slope.mp4`
 - `videos/mouse_control_with_cloth.mp4`
 - `videos/two_robots_cloth_handover.mp4`
+- `videos/pick_water_cup_place_and_fall.mp4`
+
+Для визуализации чашки скрипт использует `scripts/water_cup.obj`. Этот OBJ-меш нужен только для отображения: физическая форма чашки задана в скрипте простыми коллизионными элементами.
 
 ## Окружение
 
@@ -44,15 +48,16 @@ python scripts/check_environment.py
 python scripts/materials_on_slope.py --headless --steps 300
 python scripts/mouse_control_with_cloth.py --cpu
 python scripts/two_robot_cloth_handover.py --cpu
+python scripts/pick_water_cup_place_and_fall.py --cpu
 ```
 
-Чтобы увидеть все параметры конкретного сценария, добавьте `--help`. Сценарии с мышью и двумя роботами по умолчанию выбирают GPU; на системах без поддерживаемого GPU укажите `--cpu`.
+В сценарии с чашкой также доступен флаг `--headless` для запуска без окна просмотра; он не меняет backend. Чтобы увидеть параметры конкретного сценария, добавьте `--help`. Сценарии с мышью, роботами и чашкой по умолчанию выбирают GPU; на системах без поддерживаемого GPU укажите `--cpu`.
 
 ## Структура
 
 ```text
 .
-├── scripts/    # эксперименты и проверка окружения
+├── scripts/    # эксперименты, проверка окружения и water_cup.obj
 ├── videos/     # видео готовых запусков
 ├── README.md
 └── pyproject.toml
