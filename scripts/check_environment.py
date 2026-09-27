@@ -3,17 +3,12 @@
 from __future__ import annotations
 
 import importlib.util
-import platform
 import sys
-
-from genesis_exploration.runtime import get_runtime_info
 
 
 def main() -> int:
-    info = get_runtime_info()
-    print(f"Python: {info.python}")
-    print(f"Platform: {info.platform}")
-    print(f"Machine: {info.machine}")
+    print(f"Python: {sys.version.split()[0]}")
+    print(f"Platform: {sys.platform}")
     print(f"Genesis importable: {importlib.util.find_spec('genesis') is not None}")
     print(f"PyTorch importable: {importlib.util.find_spec('torch') is not None}")
     print(f"Executable: {sys.executable}")

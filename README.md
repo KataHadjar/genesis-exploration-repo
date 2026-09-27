@@ -1,48 +1,61 @@
-# Genesis Exploration
+# Genesis exploration
 
-Репозиторий для экспериментов, проверок и результатов работы с Genesis.
+Набор демонстрационных экспериментов с физическим движком [Genesis World](https://genesis-world.readthedocs.io/). Скрипты находятся в `scripts/`, готовые записи запусков — в `videos/`.
 
-## Быстрый старт
+## Состав
 
-Из корня этого репозитория:
+| Скрипт | Что показывает | Запуск |
+| --- | --- | --- |
+| `scripts/materials_on_slope.py` | Движение тел с разными материалами по наклонной плоскости | `python scripts/materials_on_slope.py` |
+| `scripts/mouse_control_with_cloth.py` | Интерактивное управление тканью мышью | `python scripts/mouse_control_with_cloth.py` |
+| `scripts/two_robot_cloth_handover.py` | Передача и растяжение ткани двумя роботами | `python scripts/two_robot_cloth_handover.py` |
+
+Записи результатов:
+
+- `videos/materials_on_slope.mp4`
+- `videos/mouse_control_with_cloth.mp4`
+- `videos/two_robots_cloth_handover.mp4`
+
+## Окружение
+
+Нужен Python **3.10–3.13**. Genesis требует PyTorch; подходящий вариант PyTorch зависит от ОС, GPU и версии CUDA/ROCm. Установите его по [официальной инструкции PyTorch](https://pytorch.org/get-started/locally/), затем установите проект и Genesis:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+python3.12 -m venv .venv
+source .venv/bin/activate        # Windows PowerShell: .venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
-python -m pip install -e ../Genesis
-python scripts/check_environment.py
-pytest
+python -m pip install torch      # Для GPU выберите команду с сайта PyTorch
+python -m pip install -e .
 ```
 
-`../Genesis` должен указывать на локальную копию основного проекта Genesis. Если Genesis уже установлен в выбранном окружении, повторная установка не нужна.
+В `pyproject.toml` указаны поддерживаемая версия Python и зависимость `genesis-world`. PyTorch устанавливается отдельно, чтобы выбрать сборку под конкретное оборудование. Для CPU запустите `materials_on_slope.py` как есть или используйте флаг `--cpu` у двух остальных сценариев. Скрипты с графическим окном требуют рабочего графического окружения; `materials_on_slope.py` также поддерживает `--headless`.
+
+Проверьте интерпретатор и доступность основных библиотек:
+
+```bash
+python scripts/check_environment.py
+```
+
+## Запуск сценариев
+
+Команды запускайте из корня репозитория. Основные параметры:
+
+```bash
+python scripts/materials_on_slope.py --headless --steps 300
+python scripts/mouse_control_with_cloth.py --cpu
+python scripts/two_robot_cloth_handover.py --cpu
+```
+
+Чтобы увидеть все параметры конкретного сценария, добавьте `--help`. Сценарии с мышью и двумя роботами по умолчанию выбирают GPU; на системах без поддерживаемого GPU укажите `--cpu`.
 
 ## Структура
 
-- `experiments/` — запускаемые сценарии исследований.
-- `src/genesis_exploration/` — небольшие переиспользуемые утилиты.
-- `tests/` — быстрые тесты утилит и конфигурации.
-- `results/` — локальные графики, логи и численные результаты; большие артефакты не коммитятся.
-- `notes/` — наблюдения, гипотезы и журнал запусков.
-- `scripts/` — проверки и вспомогательные команды.
-
-## Правила результатов
-
-Каждый эксперимент должен сохранять рядом с результатом:
-
-1. дату и команду запуска;
-2. версию Genesis и Python;
-3. backend/device (`cpu`, `cuda` и т. п.);
-4. параметры эксперимента;
-5. краткий вывод и известные ограничения.
-
-Не добавляйте в Git видео, дампы, кэши и большие бинарные файлы без явной необходимости. Для воспроизводимости храните маленькие метаданные в JSON или Markdown.
-
-## Запуск экспериментов
-
-```bash
-python experiments/hello_genesis.py
+```text
+.
+├── scripts/    # эксперименты и проверка окружения
+├── videos/     # видео готовых запусков
+├── README.md
+└── pyproject.toml
 ```
 
-Для визуальных сценариев нужен рабочий графический backend. Для headless-запусков используйте настройки, предусмотренные самим Genesis и драйвером машины.
+Локальное виртуальное окружение, кэши Python и сгенерированные численные артефакты не следует добавлять в Git.
