@@ -57,5 +57,3 @@ python scripts/two_robot_cloth_handover.py --cpu
 ├── README.md
 └── pyproject.toml
 ```
-
-Локальное виртуальное окружение, кэши Python и сгенерированные численные артефакты не следует добавлять в Git.
